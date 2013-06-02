@@ -32,6 +32,10 @@ require 'json'
   PUT service/:id
 =end
 module BurstNet
+
+  class APIResponseError < StandardError
+  end
+
   class API
     include HTTParty
     base_uri 'https://rsapi.burst.net'
@@ -55,8 +59,11 @@ module BurstNet
       if response.success?
         response.parsed_response
       else
-        raise response.response
+        raise APIResponseError.new(response.response)
       end
+    rescue TypeError
+      Rails.logger.error(response.inspect)
+      raise APIResponseError.new('Error in response. Please check your logs.')
     end
 
     def post(path, options = {})
@@ -64,8 +71,11 @@ module BurstNet
       if response.success?
         response.parsed_response
       else
-        raise response.response
+        raise APIResponseError.new(response.response)
       end
+    rescue TypeError
+      Rails.logger.error(response.inspect)
+      raise APIResponseError.new('Error in response. Please check your logs.')
     end
 
     def put(path, options = {})
@@ -73,8 +83,11 @@ module BurstNet
       if response.success?
         response.parsed_response
       else
-        raise response.response
+        raise APIResponseError.new(response.response)
       end
+    rescue TypeError
+      Rails.logger.error(response.inspect)
+      raise APIResponseError.new('Error in response. Please check your logs.')
     end
 
     def delete(path, options = {})
@@ -82,8 +95,11 @@ module BurstNet
       if response.success?
         response.parsed_response
       else
-        raise response.response
+        raise APIResponseError.new(response.response)
       end
+    rescue TypeError
+      Rails.logger.error(response.inspect)
+      raise APIResponseError.new('Error in response. Please check your logs.')
     end
 
     def get_products
@@ -134,7 +150,7 @@ module BurstNet
 
     def get_services_by_status(status)
       possible_status = %w(active cancelled fraud pending suspended terminated)
-      raise('Unknown service status') unless possible_status.include?(status)
+      raise ArgumentError.new('Unknown service status') unless possible_status.include?(status)
       self.get("/service/#{status}")
     end
 
@@ -144,7 +160,7 @@ module BurstNet
 
     def get_orders_by_status(status)
       possible_status = %w(active cancelled fraud pending)
-      raise('Unknown order status') unless possible_status.include?(status)
+      raise ArgumentError.new('Unknown order status') unless possible_status.include?(status)
       self.get("/order/#{status}")
     end
 

@@ -8,7 +8,7 @@ module BurstNet
       self.hostname = params['hostname']
       self.order_id = params['order']
       self.status = params['status']
-      self.product_id = params['pid ']
+      self.product_id = params['pid '] # Not a typo - the field really comes like this
       self.dedicatedip = params['dedicatedip']
       self.assignedips = params['assignedips']
       self.username = params['username']
