@@ -1,7 +1,9 @@
 SpreeBurstnet
 =============
 
-Introduction goes here.
+This an approach at an implementation of the [BurstNet](https://service.burst.net/aff.php?aff=558) reseller API as a Spree module that will allow easy integration of the services available in BurstNet as Products in a Spree store.
+
+[Check out BurstNet hosting services](https://service.burst.net/aff.php?aff=558)
 
 Installation
 ------------
