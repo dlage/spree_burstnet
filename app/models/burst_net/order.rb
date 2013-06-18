@@ -1,5 +1,5 @@
 module BurstNet
-  class Product < BurstNet::Model
+  class Order < BurstNet::Model
     attr_accessor :id
 
     def initialize(params)
